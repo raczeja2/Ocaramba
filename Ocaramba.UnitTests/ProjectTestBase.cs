@@ -25,7 +25,8 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using Ocaramba.Logger;
 using OcarambaLite.Logger;
-
+using NLog;
+using System; 
 namespace Ocaramba.UnitTests
 {
     /// <summary>
@@ -35,7 +36,9 @@ namespace Ocaramba.UnitTests
     {
 
         private readonly DriverContext driverContext = new DriverContext();
-
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
+       private IDisposable testLogScope;
         /// <summary>
         /// Gets or sets logger instance for driver
         /// </summary>
@@ -69,10 +72,8 @@ namespace Ocaramba.UnitTests
         [OneTimeSetUp]
         public void BeforeClass()
         {
-
+            this.testLogScope = ScopeContext.PushProperty("TestName", TestContext.CurrentContext.Test.Name);
             this.DriverContext.CurrentDirectory = Directory.GetCurrentDirectory();
-
-
 
             this.DriverContext.CurrentDirectory = TestContext.CurrentContext.TestDirectory;
 
@@ -88,6 +89,7 @@ namespace Ocaramba.UnitTests
         public void AfterClass()
         {
             this.DriverContext.Stop();
+            this.testLogScope?.Dispose();
         }
 
         /// <summary>
@@ -96,6 +98,7 @@ namespace Ocaramba.UnitTests
         [SetUp]
         public void BeforeTest()
         {
+    
             this.DriverContext.TestTitle = TestContext.CurrentContext.Test.Name;
             this.LogTest.LogTestStarting(this.driverContext);
         }

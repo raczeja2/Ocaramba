@@ -34,8 +34,8 @@ namespace Ocaramba
     /// </summary>
     public static class Verify
     {
-        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
 
         /// <summary>
         /// Verify group of assets.

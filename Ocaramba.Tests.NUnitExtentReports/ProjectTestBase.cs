@@ -32,6 +32,7 @@ namespace Ocaramba.Tests.NUnitExtentReports
     using Ocaramba.Logger;
     using AventStack.ExtentReports;
     using System;
+    using NLog;
     using Ocaramba.Tests.NUnitExtentReports.ExtentLogger;
 
     /// <summary>
@@ -40,7 +41,10 @@ namespace Ocaramba.Tests.NUnitExtentReports
     public class ProjectTestBase : TestBase
     {
         private readonly DriverContext driverContext = new DriverContext();
-        
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
+        private IDisposable testLogScope;
+
         [ThreadStatic]
         private ExtentTest testContainer;
 
@@ -79,7 +83,7 @@ namespace Ocaramba.Tests.NUnitExtentReports
         [OneTimeSetUp]
         public void BeforeClass()
         {
-
+            this.testLogScope = ScopeContext.PushProperty("TestName", TestContext.CurrentContext.Test.Name);
             this.testContainer = TestExecutionManager.extent.CreateTest(TestContext.CurrentContext.Test.ClassName);
             this.DriverContext.CurrentDirectory = Directory.GetCurrentDirectory();
             this.DriverContext.Start();
@@ -96,6 +100,7 @@ namespace Ocaramba.Tests.NUnitExtentReports
             PrintPerformanceResultsHelper.PrintAverageDurationMillisecondsInTeamcity(this.DriverContext.PerformanceMeasures);
             PrintPerformanceResultsHelper.PrintPercentiles90DurationMillisecondsinTeamcity(this.DriverContext.PerformanceMeasures);
             this.DriverContext.Stop();
+            this.testLogScope?.Dispose();
         }
 
         /// <summary>
@@ -107,6 +112,8 @@ namespace Ocaramba.Tests.NUnitExtentReports
             test = this.testContainer.CreateNode(TestContext.CurrentContext.Test.Name);
             this.DriverContext.TestTitle = TestContext.CurrentContext.Test.Name;
             this.LogTest.LogTestStarting(this.driverContext);
+            LogFactory.Dispose();
+            this.testLogScope?.Dispose();
         }
 
         /// <summary>

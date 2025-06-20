@@ -31,11 +31,8 @@ namespace Ocaramba.Tests.PageObjects.PageObjects.TheInternet
     public class FloatingMenuPage : ProjectPageBase
     {
 
-        
-
-
-        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
 
         private readonly ElementLocator floatingMenuPageText = new ElementLocator(
             Locator.CssSelector,

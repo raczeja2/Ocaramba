@@ -39,7 +39,9 @@ namespace Ocaramba.Tests.Appium
     {
         private readonly DriverContext driverContext = new DriverContext();
 
-         private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
+        private IDisposable testLogScope;
 
         public ProjectTestBase()
         {
@@ -92,6 +94,8 @@ namespace Ocaramba.Tests.Appium
         public void AfterClass()
         {
             this.DriverContext.Stop();
+            LogFactory.Dispose();
+            this.testLogScope?.Dispose();
         }
 
         /// <summary>

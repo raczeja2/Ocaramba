@@ -53,7 +53,8 @@ namespace Ocaramba.Tests.NUnit
             .AddJsonFile($"appsettings.{Env}.json", true, true)
             .Build();
 
-        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
 
 
         /// <summary>

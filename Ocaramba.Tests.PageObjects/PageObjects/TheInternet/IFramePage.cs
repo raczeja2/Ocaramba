@@ -32,8 +32,8 @@ namespace Ocaramba.Tests.PageObjects.PageObjects.TheInternet
     public class IFramePage : ProjectPageBase
     {
 
-        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
         private readonly ElementLocator
             menu = new ElementLocator(Locator.CssSelector, "div[role=menubar]"),
             iframe = new ElementLocator(Locator.Id, "mce_0_ifr"),

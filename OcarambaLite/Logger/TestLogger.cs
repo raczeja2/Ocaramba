@@ -36,7 +36,8 @@ namespace OcarambaLite.Logger
         /// The logger.
         /// </summary>
 
-       private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
 
         /// <summary>
         /// The start test time.

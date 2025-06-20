@@ -29,7 +29,8 @@ namespace Ocaramba.Tests.PageObjects.PageObjects.TheInternet
 
     public class NewWindowPage : ProjectPageBase
     {
-        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
 
         private readonly ElementLocator
     newWindowPageLocator = new ElementLocator(Locator.CssSelector, "h3");

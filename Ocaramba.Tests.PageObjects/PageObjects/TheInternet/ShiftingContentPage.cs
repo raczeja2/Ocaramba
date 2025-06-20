@@ -31,11 +31,8 @@ namespace Ocaramba.Tests.PageObjects.PageObjects.TheInternet
     public class ShiftingContentPage : ProjectPageBase
     {
 
-        
-
-
-        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
 
         /// <summary>
         /// Locators for elements

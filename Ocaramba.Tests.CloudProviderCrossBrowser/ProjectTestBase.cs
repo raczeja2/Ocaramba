@@ -42,8 +42,9 @@ namespace Ocaramba.Tests.CloudProviderCrossBrowser
     /// </summary>
     public class ProjectTestBase : TestBase
     {
-        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
+        private IDisposable testLogScope;
         private readonly DriverContext driverContext = new DriverContext();
 
         public ProjectTestBase()
@@ -74,6 +75,7 @@ namespace Ocaramba.Tests.CloudProviderCrossBrowser
         [OneTimeSetUp]
         public void BeforeClass()
         {
+            this.testLogScope = ScopeContext.PushProperty("TestName", TestContext.CurrentContext.Test.Name);
             this.driverContext.CurrentDirectory = Directory.GetCurrentDirectory();
         }
 
@@ -83,6 +85,8 @@ namespace Ocaramba.Tests.CloudProviderCrossBrowser
         [OneTimeTearDown]
         public void AfterClass()
         {
+            this.testLogScope?.Dispose();
+            LogFactory.Dispose();
         }
 
         /// <summary>

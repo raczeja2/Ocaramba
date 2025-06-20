@@ -40,8 +40,8 @@ namespace Ocaramba.Helpers
         /// Directory separator.
         /// </summary>
         public static readonly char Separator = Path.DirectorySeparatorChar;
-        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
 
         /// <summary>
         /// Returns the file extension.

@@ -34,11 +34,9 @@ namespace Ocaramba.Tests.PageObjects.PageObjects.TheInternet
     public class KeyPressesPage : ProjectPageBase
     {
 
-        
-
-
-        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
-
+    
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
 
         private readonly ElementLocator keyPressesPageHeader = new ElementLocator(Locator.XPath, "//h3[.='Key Presses']");
 

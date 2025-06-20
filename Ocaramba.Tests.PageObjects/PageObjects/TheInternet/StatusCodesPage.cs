@@ -33,11 +33,8 @@ namespace Ocaramba.Tests.PageObjects.PageObjects.TheInternet
     public class StatusCodesPage : ProjectPageBase
     {
 
-        
-
-
-        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
 
         private readonly ElementLocator
             statusCodeHeader = new ElementLocator(Locator.XPath, "//h3[text()='Status Codes']"),

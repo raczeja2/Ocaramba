@@ -20,8 +20,6 @@
 //     SOFTWARE.
 // </license>
 
-using OcarambaLite.Logger;
-
 namespace Ocaramba
 {
     using System;
@@ -36,14 +34,16 @@ namespace Ocaramba
     using Ocaramba.Helpers;
     using Ocaramba.Logger;
     using Ocaramba.Types;
+    using OcarambaLite.Logger;
     using OpenQA.Selenium;
+    using OpenQA.Selenium.Appium;
     using OpenQA.Selenium.Chrome;
     using OpenQA.Selenium.Edge;
     using OpenQA.Selenium.Firefox;
     using OpenQA.Selenium.IE;
     using OpenQA.Selenium.Remote;
     using OpenQA.Selenium.Safari;
-    using OpenQA.Selenium.Appium;
+
 
     /// <summary>
     /// Contains handle to driver and methods for web browser.
@@ -51,7 +51,8 @@ namespace Ocaramba
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "Driver is disposed on test end")]
     public partial class DriverContext
     {
-        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
 
         private readonly Collection<ErrorDetail> verifyMessages = new Collection<ErrorDetail>();
 

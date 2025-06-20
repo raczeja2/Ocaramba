@@ -30,6 +30,7 @@ namespace Ocaramba.Tests.NUnit
     using Ocaramba;
     using Ocaramba.Helpers;
     using Ocaramba.Logger;
+    using NLog;
 
     /// <summary>
     /// The base class for all tests <see href="https://github.com/ObjectivityLtd/Ocaramba/wiki/ProjectTestBase-class">More details on wiki</see>
@@ -37,6 +38,9 @@ namespace Ocaramba.Tests.NUnit
     public class ProjectTestBase : TestBase
     {
         private readonly DriverContext driverContext = new DriverContext();
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
+        private IDisposable testLogScope;
 
         /// <summary>
         /// Gets or sets logger instance for driver
@@ -71,13 +75,9 @@ namespace Ocaramba.Tests.NUnit
         [OneTimeSetUp]
         public void BeforeClass()
         {
-
+            this.testLogScope = ScopeContext.PushProperty("TestName", TestContext.CurrentContext.Test.Name);
             this.DriverContext.CurrentDirectory = Directory.GetCurrentDirectory();
-
-
-
             this.DriverContext.CurrentDirectory = TestContext.CurrentContext.TestDirectory;
-
             this.DriverContext.Start();
         }
 
@@ -90,6 +90,8 @@ namespace Ocaramba.Tests.NUnit
             this.DriverContext.Stop();
             PrintPerformanceResultsHelper.PrintAverageDurationMillisecondsInTeamcity(this.DriverContext.PerformanceMeasures);
             PrintPerformanceResultsHelper.PrintPercentiles90DurationMillisecondsinTeamcity(this.DriverContext.PerformanceMeasures);
+            LogFactory.Dispose();
+            this.testLogScope?.Dispose();
         }
 
         /// <summary>

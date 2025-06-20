@@ -34,12 +34,8 @@ namespace Ocaramba.Tests.Xunit
     {
         private bool disposed;
 
-
-        
-
-
-        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
-
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectTestBase"/> class.
@@ -70,6 +66,7 @@ namespace Ocaramba.Tests.Xunit
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
+            LogFactory.Dispose();
         }
 
         protected virtual void Dispose(bool disposing)

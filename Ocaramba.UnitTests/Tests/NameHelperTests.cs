@@ -12,11 +12,9 @@ namespace Ocaramba.UnitTests.Tests
 
         string folder = TestContext.CurrentContext.TestDirectory;
 
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
 
-        
-
-
-        private static readonly NLog.Logger Logger = LogManager.GetCurrentClassLogger();
 
         [Test()]
         public void ShortenFileNameTest()

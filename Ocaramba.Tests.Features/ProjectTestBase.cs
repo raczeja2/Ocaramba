@@ -29,7 +29,7 @@ namespace Ocaramba.Tests.Features
     using NUnit.Framework;
     using Ocaramba;
     using Ocaramba.Logger;
-
+    using NLog;
     using TechTalk.SpecFlow;
 
     /// <summary>
@@ -40,6 +40,9 @@ namespace Ocaramba.Tests.Features
     {
         private readonly ScenarioContext scenarioContext;
         private readonly DriverContext driverContext = new Ocaramba.DriverContext();
+        private static readonly LogFactory LogFactory = new LogFactory();
+        private static readonly NLog.Logger Logger = LogFactory.GetCurrentClassLogger();
+        private IDisposable testLogScope;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectTestBase"/> class.
@@ -88,6 +91,7 @@ namespace Ocaramba.Tests.Features
         [BeforeFeature]
         public static void BeforeClass()
         {
+            this.testLogScope = ScopeContext.PushProperty("TestName", TestContext.CurrentContext.Test.Name);
         }
 
         /// <summary>
@@ -96,6 +100,7 @@ namespace Ocaramba.Tests.Features
         [AfterFeature]
         public static void AfterClass()
         {
+            LogFactory.Dispose();
         }
 
         /// <summary>
