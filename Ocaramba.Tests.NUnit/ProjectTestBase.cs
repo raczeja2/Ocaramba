@@ -31,6 +31,7 @@ namespace Ocaramba.Tests.NUnit
     using Ocaramba.Helpers;
     using Ocaramba.Logger;
     using NLog;
+    using System;
 
     /// <summary>
     /// The base class for all tests <see href="https://github.com/ObjectivityLtd/Ocaramba/wiki/ProjectTestBase-class">More details on wiki</see>
